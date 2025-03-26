@@ -1,25 +1,55 @@
- const express = require('express');
-const { resolve } = require('path');
-require('dotenv').config();
-
+// Boilerplate Code for Virtual Assistant API
+const express = require('express');
 const app = express();
-const port = 3010;
 
-app.use(express.static('static'));
+app.get('/assistant/greet', (req, res) => {
+    const name = req.query.name;
+    const week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const day = new Date().getDate();
+    const currDay = week[day]
+    if (currDay === "Monday"){
+      res.send({welcomeMessage: `Hello, ${name}! Welcome to our assistant app!`,
+                dayMessage: "It's friday! The weekend is near!"})
+    }
+    else {
+      res.send({welcomeMessage: `Hello, ${name}! Welcome to our assistant app!`,
+      dayMessage: "Have a wonderful day!"})
+    }
 
-app.get('/', (req, res) => {
-  res.sendFile(resolve(__dirname, 'pages/index.html'));
 });
 
-const config = {
-  apiKey: process.env.API_KEY,
-  serverSecret: process.env.SERVER_SECRET,
-  isKalvian: process.env.IS_KALVIAN === 'true',
-};
+/*
+Task:
+You need to build an API for a virtual assistant that provides customized responses.
 
-module.exports = config;
+Requirements:
+1. Create a GET endpoint at "/assistant/greet".
+2. The endpoint should accept a "name" as a query parameter (e.g., /assistant/greet?name=John).
+3. The API should return a JSON response with:
+   a. A personalized greeting using the name provided.
+   b. A cheerful message based on the current day of the week.
 
+Example Responses:
+- For Monday:
+  {
+    "welcomeMessage": "Hello, John! Welcome to our assistant app!",
+    "dayMessage": "Happy Monday! Start your week with energy!"
+  }
+- For Friday:
+  {
+    "welcomeMessage": "Hello, John! Welcome to our assistant app!",
+    "dayMessage": "It's Friday! The weekend is near!"
+  }
+- For other days:
+  {
+    "welcomeMessage": "Hello, John! Welcome to our assistant app!",
+    "dayMessage": "Have a wonderful day!"
+  }
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
-}); 
+Add the required logic below to complete the API.
+*/
+
+const PORT = 3000;
+app.listen(PORT, () => {
+    console.log(`Virtual Assistant API is running on http://localhost:${PORT}`);
+});
