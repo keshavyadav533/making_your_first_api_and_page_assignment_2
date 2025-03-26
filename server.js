@@ -1,56 +1,55 @@
-// Boilerplate Code for HTTP Status Code API
+// Boilerplate Code for Virtual Assistant API
 const express = require('express');
 const app = express();
 
+app.get('/assistant/greet', (req, res) => {
+    const name = req.query.name;
+    const week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const day = new Date().getDate();
+    const currDay = week[day]
+    if (currDay === "Monday"){
+      res.send({welcomeMessage: `Hello, ${name}! Welcome to our assistant app!`,
+                dayMessage: "It's friday! The weekend is near!"})
+    }
+    else {
+      res.send({welcomeMessage: `Hello, ${name}! Welcome to our assistant app!`,
+      dayMessage: "Have a wonderful day!"})
+    }
+
+});
+
 /*
 Task:
-You need to create an API that helps users understand different HTTP status codes and their meanings.
+You need to build an API for a virtual assistant that provides customized responses.
 
 Requirements:
-1. Create a GET endpoint at "/status-info".
-2. The endpoint should accept a "code" as a query parameter (e.g., /status-info?code=200).
-3. Based on the status code provided, the API should respond with:
-   a. The status code.
-   b. A description of the status code.
+1. Create a GET endpoint at "/assistant/greet".
+2. The endpoint should accept a "name" as a query parameter (e.g., /assistant/greet?name=John).
+3. The API should return a JSON response with:
+   a. A personalized greeting using the name provided.
+   b. A cheerful message based on the current day of the week.
 
 Example Responses:
-- For 200 (OK):
-  Request: /status-info?code=200
-  Response:
+- For Monday:
   {
-    "status": 200,
-    "message": "OK: The request has succeeded. The meaning of this status depends on the HTTP method used."
+    "welcomeMessage": "Hello, John! Welcome to our assistant app!",
+    "dayMessage": "Happy Monday! Start your week with energy!"
+  }
+- For Friday:
+  {
+    "welcomeMessage": "Hello, John! Welcome to our assistant app!",
+    "dayMessage": "It's Friday! The weekend is near!"
+  }
+- For other days:
+  {
+    "welcomeMessage": "Hello, John! Welcome to our assistant app!",
+    "dayMessage": "Have a wonderful day!"
   }
 
-- For 404 (Not Found):
-  Request: /status-info?code=404
-  Response:
-  {
-    "status": 404,
-    "message": "Not Found: The server has not found anything matching the request URI. This is often caused by a missing page or resource."
-  }
-
-- For 500 (Internal Server Error):
-  Request: /status-info?code=500
-  Response:
-  {
-    "status": 500,
-    "message": "Internal Server Error: The server encountered an unexpected condition that prevented it from fulfilling the request."
-  }
-
-- For 400 (Bad Request):
-  Request: /status-info?code=400
-  Response:
-  {
-    "status": 400,
-    "message": "Bad Request: The server cannot process the request due to client-side errors (e.g., malformed syntax)."
-  }
-
-List of Status Codes to Handle:
-200, 201, 204, 400, 401, 403, 404, 405, 429, 500, 502, 503, 504
+Add the required logic below to complete the API.
 */
 
 const PORT = 3000;
 app.listen(PORT, () => {
-    console.log(`Status Code API is running on http://localhost:${PORT}`);
+    console.log(`Virtual Assistant API is running on http://localhost:${PORT}`);
 });
